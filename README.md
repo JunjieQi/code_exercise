@@ -41,7 +41,7 @@ $ go test -v $(glide novendor)
 Get this repo locally, and build it!
 ~~~
 $ cd $GOPATH/src
-$ git clone git@legitlab.letv.cn:digital-marketing/code_exercise.git
+$ git clone git@github.com:JunjieQi/code_exercise.git
 $ cd code_exercise
 $ glide install
 $ go get -u golang.org/x/net/html
@@ -77,4 +77,4 @@ And the response is JSON format
 ## Need To Do
 1. There are still some corner cases needed to be covered
 2. Need to do some load test
-3. 
+3. need to have a logger to log each request and error information
