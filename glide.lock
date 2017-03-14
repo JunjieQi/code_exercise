@@ -1,0 +1,20 @@
+hash: 9835fe050c8ca981a83ec27df67febe28ed4def48305831b1325c927dce4041c
+updated: 2017-03-13T21:16:34.712260951-07:00
+imports:
+- name: github.com/codegangsta/negroni
+  version: feacfc52d357c844f524c794947493483ed881b3
+- name: github.com/gorilla/context
+  version: aed02d124ae4a0e94fea4541c8effd05bf0c8296
+- name: github.com/gorilla/mux
+  version: 392c28fe23e1c45ddba891b0320b3b5df220beea
+- name: github.com/mvdan/xurls
+  version: d315b61cf6727664f310fa87b3197e9faf2a8513
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - assert
+- name: github.com/unrolled/render
+  version: 198ad4d8b8a4612176b804ca10555b222a086b40
+- name: github.com/urfave/negroni
+  version: fde5e16d32adc7ad637e9cd9ad21d4ebc6192535
+testImports: []
