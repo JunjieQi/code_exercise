@@ -2,8 +2,10 @@ package message
 
 import (
 	"testing"
+	"net/http"
 
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/h2non/gock.v1"
 )
 
 func TestParse(t *testing.T) {
@@ -47,10 +49,19 @@ func TestGetUrls(t *testing.T) {
 }
 
 func TestGetTitle(t *testing.T) {
-	title, err := getTitle("http://www.nbcolympics.com")
+	defer gock.Off()
+
+	gock.New("http://www.nbcolympics.com").
+		Reply(http.StatusOK).
+		BodyString("<title>hello</title>")
+
+	client := &http.Client{Transport: &http.Transport{}}
+	gock.InterceptClient(client)
+
+	title, err := getTitle("http://www.nbcolympics.com", client)
 
 	assert.Nil(t, err)
-	assert.NotEmpty(t, title)
+	assert.Equal(t, "hello", title)
 }
 
 func TestParseLinks(t *testing.T) {

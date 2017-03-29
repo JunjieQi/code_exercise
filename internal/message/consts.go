@@ -11,3 +11,7 @@ const (
 	maxIdleConnection int = 10
 	timeout               = time.Second
 )
+
+const (
+	MaxGorountine int = 10
+)

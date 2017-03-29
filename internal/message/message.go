@@ -3,11 +3,12 @@ package message
 import (
 	"net/http"
 	"regexp"
+	"sync"
 
 	"github.com/mvdan/xurls"
 
 	"code_exercise/internal/html"
-	"sync"
+	"code_exercise/internal/gorountine"
 )
 
 var httpClient *http.Client = &http.Client{
@@ -66,17 +67,19 @@ func parseLinks(str string) []Link {
 		return make([]Link, 0)
 	}
 
+
 	var wg sync.WaitGroup
-	wg.Add(len(urls))
 
 	links := make([]Link, len(urls))
 
 	for index, url := range urls {
+		gorountine.Sem <- true
+		wg.Add(1)
 		go func(i int, u string) {
 			defer wg.Done()
-			title, _ := getTitle(u)
+			title, _ := getTitle(u, httpClient)
 			links[i] = Link{u, title}
-
+			<- gorountine.Sem
 		}(index, url)
 	}
 
@@ -89,13 +92,13 @@ func getUrls(str string) []string {
 	return xurls.Strict.FindAllString(str, -1)
 }
 
-func getTitle(url string) (string, error) {
+func getTitle(url string, client *http.Client) (string, error) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return "", err
 	}
 
-	resp, err := httpClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
 	}
